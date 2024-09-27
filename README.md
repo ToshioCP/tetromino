@@ -11,6 +11,7 @@ There are 5 different types of tetrominoes, as shown below:
 - O-shaped tetromino
 - Z-shaped tetromino
 
+```
 oooo
 
 o
@@ -24,6 +25,7 @@ oo
 
 oo
  oo
+```
 
 The goal of the puzzle is to arrange the tetrominoes to fit into a specific shape, usually a rectangle.
 If two patterns are symmetrical or one can be rotated to match the other, they are considered identical.
