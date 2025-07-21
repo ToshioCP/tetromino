@@ -187,7 +187,7 @@ class Board:
         if not self.samewh(other):
             return False
         b = other
-        if self.width == self.height: # square-shaped board
+        if self.width == self.height: # square shaped board
             for _ in range(4):
                 rb = b
                 for _ in range(2):
@@ -209,12 +209,12 @@ class Board:
     def samewh(self, other):
         return self.width == other.width and self.height == other.height
 
-# pieve_pool: list of pieces (tetrominoes). In this 4x4 puzzle, each tetromino can be used up to twice.
-#             So, the pool is like [I, I, T, T, L, L, O, O, Z, Z]
+
+# piece_pool: list of pieces (tetrominoes). In this puzzle, Six L-shaped tetrominoes are used.
+#             So, the pool is [L, L, L, L, L, L]
 # used: list of names that used in a solution
 # depth: number of tetrominoes embeded in the board
 # n: The number of distinct tetrominoes used in the solution. Some puzzles require this number to be greater than or equal to a certain value.
-
 class Solver:
     def __init__(self, width, height, piece_pool):
         self.piece_pool = piece_pool
@@ -280,15 +280,15 @@ def show_solutions(solutions, filename):
 
 # main program
 def main():
-    tetromino_shapes = ["I", "L", "T", "O", "Z"]
-    pp = [Tetromino(x) for x in tetromino_shapes]
-    piece_pool = [x for x in pp for _ in range(2)]
-    solver = Solver(4, 4, piece_pool)
-    solver.solve([], 0, 3) # At least 3 tetrominoes must be used.
-    solutions = solver.unique_solutions()
-    show_solutions(solutions, "tetromino-solutions-4x4.png")
-    # print(len(solver.solutions))
-    # print(len(solutions))
+    tetromino_shapes = ["L"] * 6
+    piece_pool = [Tetromino(x) for x in tetromino_shapes]
+    # The area of the rectangle is 4*6 = 24.
+    # Therefore, the width and height is one of: (12, 2), (8, 3) or (6, 4)
+    for wh in ((12, 2), (8, 3), (6, 4)):
+        solver = Solver(wh[0], wh[1], piece_pool)
+        solver.solve([], 0, 1)
+        solutions = solver.unique_solutions()
+        show_solutions(solutions, f"tetromino_solutions_{wh[0]}x{wh[1]}.png")
 
 if __name__ == "__main__":
     main()
